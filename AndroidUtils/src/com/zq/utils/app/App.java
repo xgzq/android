@@ -14,13 +14,6 @@ public class App extends Application{
 		super.onCreate();
 		sApp = this;
 		Logger.initLogger(this);
-		
-		
-		Logger.v("ceshi vvvv");
-		Logger.d("ceshi dddd");
-		Logger.i("ceshi iiii");
-		Logger.w("ceshi wwww");
-		Logger.e("ceshi eeee");
 	}
 	
 	public synchronized static App newInstance(){
