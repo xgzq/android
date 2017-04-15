@@ -40,7 +40,7 @@ public final class Logger {
 	/**
 	 * WARN级别的日志
 	 */   
-	public static final int WARN =  5;
+	public static final int WARN = 5;
 	
 	/**
 	 * ERROR级别的日志
@@ -55,7 +55,7 @@ public final class Logger {
 	/**
 	 * 下划线
 	 */
-	public static final String sLine = "_";
+	public static final String UNDER_LINE = "_";
 	
 	
 	//********************* private static *********************//
@@ -401,7 +401,7 @@ public final class Logger {
 	
 	private static String formatTag()
 	{
-		String tag = sTagHeader + sLine + sTagFooter;
+		String tag = sTagHeader + UNDER_LINE + sTagFooter;
 		return tag;
 	}
 	
