@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <declare-styleable name="TitleView">
+        <attr name="backgroundColor" format="reference|color" />
+        <attr name="viewHeight" format="reference|dimension"/>
+        
+        <attr name="isBackImg" format="boolean"/>
+        <attr name="backImgScr" format="reference"/>
+        <attr name="backText" format="reference|string"/>
+        <attr name="backTextSize" format="reference|dimension"/>
+        <attr name="backTextColor" format="reference|color"/>
+        
+        <attr name="isTitle" format="boolean"/>
+        <attr name="title" format="reference|string" />
+        <attr name="titleSize" format="reference|dimension"/>
+        <attr name="titleColor" format="reference|color"/>
+        
+        <attr name="tipImgVisibility" format="boolean"/>
+        <attr name="tipImgScr" format="reference"/>
+        
+        <attr name="tipTextVisibility" format="boolean"/>
+        <attr name="tip" format="reference|string" />
+        <attr name="tipSize" format="reference|dimension"/>
+        <attr name="tipColor" format="reference|color"/>
+        
+    </declare-styleable>
+</resources>

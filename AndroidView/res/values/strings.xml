@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="view_title_img_btn_left_des">left_des</string>
+    <string name="view_title_img_btn_right_des">right_des</string>
+    <string name="view_title_tv_center_text">标题</string>
+    <string name="view_title_tv_left_text">返回</string>
+    <string name="view_title_tv_right_text">首页</string>
+</resources>
