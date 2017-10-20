@@ -42,5 +42,14 @@ public class DimenUtil
 		float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
 		return spValue * fontScale / scale;
 	}
+	
+	public static int getScreenWidth(Context ctx)
+	{
+		return ctx.getResources().getDisplayMetrics().widthPixels;
+	}
 
+	public static int getScreenHeight(Context ctx)
+	{
+		return ctx.getResources().getDisplayMetrics().heightPixels;
+	}
 }
