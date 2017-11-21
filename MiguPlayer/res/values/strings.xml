@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MiguPlayer</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="xxxxxxxxxx">xxxxxxxxxx</string>
+    <string name="todo">TODO</string>
+    <string name="title_activity_anim">AnimActivity</string>
+    <string name="title_activity_sudoku">SudokuActivity</string>
+
+</resources>
