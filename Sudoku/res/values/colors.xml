@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="view_title_tv_center_title_color">#FFFFFF</color>
+    <color name="view_title_background_color">#a156d4</color>
+    
+    <!-- sukodu colors -->
+    <color name="sudoku_immersion_bg">#2AA198</color>
+    <color name="sudoku_title_bg">#2AA198</color>
+    <color name="sudoku_title_text">#9AE6FF</color>
+    <color name="sudoku_dividing">#F68B3E</color>
+    <color name="sudoku_item_siv_gone_normal">#A9C3E4</color>
+    <color name="sudoku_item_siv_gone_pressed">#9b75ff</color>
+    <color name="sudoku_item_siv_selected_normal">#CC5200</color>
+    <color name="sudoku_item_siv_selected_pressed">#9b75ff</color>
+    <color name="sudoku_item_siv_shown_normal">#FFCCCC</color>
+    <color name="sudoku_item_siv_shown_pressed">#9b75ff</color>
+    <color name="sudoku_item_btn_number_normal">#93ECCB</color>
+    <color name="sudoku_item_btn_number_pressed">#551B49</color>
+    <color name="sudoku_item_btn_text">#DC322F</color>
+    <color name="sudoku_root_border">#C32A7E</color>
+    <color name="sudoku_root_bg">#FFF69F</color>
+    <color name="sudoku_item_btn_dash">#000000</color>
+    <color name="sudoku_tv_take_time">#68FF63</color>
+    <!-- sukodu colors -->
+
+</resources>

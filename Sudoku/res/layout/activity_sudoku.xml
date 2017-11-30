@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res/com.xgzq.android.sudoku"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SudokuActivity" >
+
+    <LinearLayout
+        android:id="@+id/sudoku_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View
+            android:id="@+id/sukodu_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <com.xgzq.android.sudoku.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_title_height"
+            app:backText=""
+            app:backgroundColor="@color/sudoku_title_bg"
+            app:isBackImg="false"
+            app:title="第一关"
+            app:titleColor="@color/sudoku_title_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sudoku_root_margin"
+        android:background="@drawable/sukodu_root_shape"
+        android:orientation="vertical"
+        android:padding="@dimen/sudoku_root_padding" >
+
+        <include layout="@layout/layout_time" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/sudoku_view_padding" >
+
+            <com.xgzq.android.sudoku.view.Sudoku
+                android:id="@+id/sudoku_sudoku"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.xgzq.android.sudoku.view.SudokuNumberPanel
+                android:id="@+id/sudoku_number_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

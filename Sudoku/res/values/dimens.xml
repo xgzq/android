@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="view_title_height">48dp</dimen>
+    <dimen name="view_title_img_margin">4dp</dimen>
+    <dimen name="view_title_img_padding">4dp</dimen>
+    <dimen name="view_title_tv_content_size">22sp</dimen>
+
+    <!-- sukodu dimens -->
+    <dimen name="sudoku_root_corners">15dp</dimen>
+    <dimen name="sudoku_root_padding">2dp</dimen>
+    <dimen name="sudoku_root_margin">4dp</dimen>
+    <dimen name="sudoku_view_bg_corners">7dp</dimen>
+    <dimen name="sudoku_view_padding">6dp</dimen>
+    <dimen name="sudoku_item_siv_corners">5dp</dimen>
+    <dimen name="sudoku_item_btn_corners">15dp</dimen>
+    <dimen name="sudoku_btn_group_margin">2dp</dimen>
+    <dimen name="sudoku_item_btn_margin">6dp</dimen>
+    <dimen name="sudoku_item_btn_dash">2dp</dimen>
+    <dimen name="sudoku_tv_take_time_corners">15dp</dimen>
+    <dimen name="sudoku_time_group_height">48dp</dimen>
+    <dimen name="sudoku_time_group_margin">4dp</dimen>
+    <!-- sukodu dimens -->
+
+</resources>
