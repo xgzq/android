@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="gary">#c1c1c1</color>
+    <color name="white">#ffffff</color>
+
+    <color name="chapter_read">#989898</color>
+    <color name="chapter_unread">#2a2a2a</color>
+    <color name="chapter_list_item_divider">#dcdcdc</color>
+
+    <!--  翻书Loading动画颜色配置  -->
+    <color name="book_loading_background">#00ffffff</color>
+    <color name="book_loading_book">#33b5e5</color>
+    <color name="book_loading_page">#fff</color>
+
+    <color name="read_title">#000000</color>
+    <color name="read_text">#989898</color>
+    <color name="read_background">#CCE8CF</color>
+
+    <color name="read_current_background">#ACD0BB</color>
+    <color name="read_bg_background">#CCE8CF</color>
+    <color name="read_next_background">#ACD0BB</color>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Yu阅读</string>
+    <string name="show_type_list">列表</string>
+    <string name="show_type_grid">平铺</string>
+</resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_recycler_item_click"
+    android:paddingStart="@dimen/layout_chapter_list_item_root_padding_left"
+    android:paddingLeft="@dimen/layout_chapter_list_item_root_padding_left"
+    android:paddingTop="@dimen/layout_chapter_list_item_root_padding_top"
+    android:paddingEnd="@dimen/layout_chapter_list_item_root_padding_bottom"
+    android:paddingRight="@dimen/layout_chapter_list_item_root_padding_right"
+    android:paddingBottom="@dimen/layout_chapter_list_item_root_padding_bottom">
+
+
+    <TextView
+        android:id="@+id/layout_chapter_item_tv_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/layout_chapter_list_item_index_padding_left"
+        android:paddingLeft="@dimen/layout_chapter_list_item_index_padding_left"
+        android:paddingEnd="@dimen/layout_chapter_list_item_index_padding_right"
+        android:paddingRight="@dimen/layout_chapter_list_item_index_padding_right"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/layout_chapter_item_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/layout_chapter_list_item_title_padding_left"
+        android:paddingLeft="@dimen/layout_chapter_list_item_title_padding_left"
+        android:paddingEnd="@dimen/layout_chapter_list_item_title_padding_right"
+        android:paddingRight="@dimen/layout_chapter_list_item_title_padding_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/layout_chapter_item_tv_info"
+        app:layout_constraintStart_toEndOf="@id/layout_chapter_item_tv_index"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/layout_chapter_item_tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingStart="@dimen/layout_chapter_list_item_info_padding_left"
+        android:paddingLeft="@dimen/layout_chapter_list_item_info_padding_left"
+        android:paddingEnd="@dimen/layout_chapter_list_item_info_padding_right"
+        android:paddingRight="@dimen/layout_chapter_list_item_info_padding_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/layout_chapter_item_tv_title"
+        app:layout_constraintRight_toLeftOf="@id/layout_chapter_item_img_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/layout_chapter_item_img_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/layout_chapter_list_item_icon_padding_left"
+        android:paddingLeft="@dimen/layout_chapter_list_item_icon_padding_left"
+        android:paddingEnd="@dimen/layout_chapter_list_item_icon_padding_right"
+        android:paddingRight="@dimen/layout_chapter_list_item_icon_padding_right"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

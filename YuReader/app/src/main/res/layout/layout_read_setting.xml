@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下一章"
+        tools:layout_editor_absoluteX="314dp"
+        tools:layout_editor_absoluteY="452dp" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上一章"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="452dp" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:progress="62"
+        app:layout_constraintBottom_toBottomOf="@+id/button10"
+        app:layout_constraintEnd_toStartOf="@+id/button11"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/button10"
+        app:layout_constraintTop_toTopOf="@+id/button10"
+        app:layout_constraintVertical_bias="0.533" />
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="目录"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="667dp" />
+
+    <Button
+        android:id="@+id/button13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="夜间模式"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="665dp" />
+
+    <Button
+        android:id="@+id/button14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="字号减"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="606dp" />
+
+    <Button
+        android:id="@+id/button15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="字号加"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="606dp" />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="行距减"
+        tools:layout_editor_absoluteX="214dp"
+        tools:layout_editor_absoluteY="606dp" />
+
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="行距加"
+        tools:layout_editor_absoluteX="313dp"
+        tools:layout_editor_absoluteY="606dp" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="字体"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="665dp" />
+
+    <Button
+        android:id="@+id/button19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置"
+        tools:layout_editor_absoluteX="314dp"
+        tools:layout_editor_absoluteY="666dp" />
+
+    <SeekBar
+        android:id="@+id/seekBar2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:progress="23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="510dp" />
+
+    <Button
+        android:id="@+id/button20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="横边距减"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="544dp" />
+
+    <Button
+        android:id="@+id/button21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="横边距加"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="544dp" />
+
+    <Button
+        android:id="@+id/button22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="竖边距减"
+        tools:layout_editor_absoluteX="214dp"
+        tools:layout_editor_absoluteY="544dp" />
+
+    <Button
+        android:id="@+id/button23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="竖边距加"
+        tools:layout_editor_absoluteX="314dp"
+        tools:layout_editor_absoluteY="544dp" />
+
+    <Button
+        android:id="@+id/button24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="背景色"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="379dp" />
+
+    <Button
+        android:id="@+id/button25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正文颜色"
+        tools:layout_editor_absoluteX="315dp"
+        tools:layout_editor_absoluteY="382dp" />
+
+    <Button
+        android:id="@+id/button26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="标题颜色"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="382dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

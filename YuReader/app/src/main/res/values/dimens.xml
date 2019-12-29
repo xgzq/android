@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_book_list_item_cover_width">92dp</dimen>
+    <dimen name="layout_book_list_item_cover_height">92dp</dimen>
+    <dimen name="layout_book_list_item_root_padding_left">4dp</dimen>
+    <dimen name="layout_book_list_item_root_padding_top">2dp</dimen>
+    <dimen name="layout_book_list_item_root_padding_right">
+        @dimen/layout_book_list_item_root_padding_left
+    </dimen>
+    <dimen name="layout_book_list_item_root_padding_bottom">
+        @dimen/layout_book_list_item_root_padding_top
+    </dimen>
+    <dimen name="layout_book_list_item_cover_margin_top">2dp</dimen>
+    <dimen name="layout_book_list_item_cover_margin_bottom">
+        @dimen/layout_book_list_item_cover_margin_top
+    </dimen>
+    <dimen name="layout_book_list_item_cover_margin_right">4dp</dimen>
+    <dimen name="layout_book_list_item_name_margin_top">2dp</dimen>
+    <dimen name="layout_book_list_item_name_margin_bottom">2dp</dimen>
+    <dimen name="layout_book_list_item_name_padding_top">2dp</dimen>
+    <dimen name="layout_book_list_item_name_padding_bottom">2dp</dimen>
+
+
+    <dimen name="layout_chapter_list_item_root_padding_left">4dp</dimen>
+    <dimen name="layout_chapter_list_item_root_padding_right">4dp</dimen>
+    <dimen name="layout_chapter_list_item_root_padding_top">12dp</dimen>
+    <dimen name="layout_chapter_list_item_root_padding_bottom">
+        @dimen/layout_chapter_list_item_root_padding_top
+    </dimen>
+    <dimen name="layout_chapter_list_item_index_padding_left">2dp</dimen>
+    <dimen name="layout_chapter_list_item_index_padding_right">2dp</dimen>
+    
+    <dimen name="layout_chapter_list_item_title_padding_left">2dp</dimen>
+    <dimen name="layout_chapter_list_item_title_padding_right">2dp</dimen>
+
+    <dimen name="layout_chapter_list_item_info_padding_left">2dp</dimen>
+    <dimen name="layout_chapter_list_item_info_padding_right">2dp</dimen>
+
+    <dimen name="layout_chapter_list_item_icon_padding_left">2dp</dimen>
+    <dimen name="layout_chapter_list_item_icon_padding_right">2dp</dimen>
+
+    <dimen name="read_loading_view_width">120dp</dimen>
+    <dimen name="read_loading_view_height">120dp</dimen>
+
+
+</resources>

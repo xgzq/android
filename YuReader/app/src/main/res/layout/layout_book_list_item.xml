@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_recycler_item_click"
+    android:paddingStart="@dimen/layout_book_list_item_root_padding_left"
+    android:paddingLeft="@dimen/layout_book_list_item_root_padding_left"
+    android:paddingTop="@dimen/layout_book_list_item_root_padding_top"
+    android:paddingEnd="@dimen/layout_book_list_item_root_padding_right"
+    android:paddingRight="@dimen/layout_book_list_item_root_padding_right"
+    android:paddingBottom="@dimen/layout_book_list_item_root_padding_bottom">
+
+    <ImageView
+        android:id="@+id/layout_book_item_img_cover"
+        android:layout_width="@dimen/layout_book_list_item_cover_width"
+        android:layout_height="@dimen/layout_book_list_item_cover_height"
+        android:layout_marginTop="@dimen/layout_book_list_item_cover_margin_top"
+        android:layout_marginEnd="@dimen/layout_book_list_item_cover_margin_right"
+        android:layout_marginRight="@dimen/layout_book_list_item_cover_margin_right"
+        android:layout_marginBottom="@dimen/layout_book_list_item_cover_margin_bottom"
+        android:src="@drawable/book_cover"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/layout_book_item_tv_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/layout_book_item_tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_book_list_item_name_margin_top"
+        android:maxLines="1"
+        android:paddingTop="@dimen/layout_book_list_item_name_padding_top"
+        android:paddingBottom="@dimen/layout_book_list_item_name_padding_bottom"
+        android:text="layout_book_item_tv_name"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/layout_book_item_tv_author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_book_item_img_cover"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/layout_book_item_tv_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/layout_book_list_item_name_padding_top"
+        android:paddingBottom="@dimen/layout_book_list_item_name_padding_bottom"
+        android:text="layout_book_item_tv_author"
+        android:textColor="#333333"
+        app:layout_constraintBottom_toTopOf="@id/layout_book_item_tv_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/layout_book_item_tv_name"
+        app:layout_constraintTop_toBottomOf="@id/layout_book_item_tv_name" />
+
+    <TextView
+        android:id="@+id/layout_book_item_tv_desc"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/layout_book_list_item_name_padding_top"
+        android:paddingBottom="@dimen/layout_book_list_item_name_padding_bottom"
+        android:text="layout_book_item_tv_desc"
+        app:layout_constraintBottom_toTopOf="@id/layout_book_item_tv_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/layout_book_item_tv_author"
+        app:layout_constraintTop_toBottomOf="@id/layout_book_item_tv_author" />
+
+    <TextView
+        android:id="@+id/layout_book_item_tv_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="layout_book_item_tv_progress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_book_item_tv_desc" />
+</androidx.constraintlayout.widget.ConstraintLayout>
