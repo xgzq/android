@@ -20,7 +20,15 @@
     <color name="read_text">#989898</color>
     <color name="read_background">#CCE8CF</color>
 
-    <color name="read_current_background">#ACD0BB</color>
+    <color name="read_current_background">#C7EDCC</color>
     <color name="read_bg_background">#CCE8CF</color>
-    <color name="read_next_background">#ACD0BB</color>
+    <color name="read_next_background">#C7EDCC</color>
+
+    <color name="apricot_yellow">#FAF9DE</color>
+    <color name="autumn_leaves_brown">#FFF2E2</color>
+    <color name="carmine">#FDE6E0</color>
+    <color name="grass_green">#E3EDCD</color>
+    <color name="sky_sea_blue">#DCE2F1</color>
+    <color name="purple">#E9EBFE</color>
+    <color name="aurora_gray">#EAEAEF</color>
 </resources>

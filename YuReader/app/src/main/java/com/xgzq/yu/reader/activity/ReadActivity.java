@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.victor.loading.book.BookLoading;
 import com.xgzq.yu.reader.R;
 import com.xgzq.yu.reader.model.adapter.ChapterListAdapter;
@@ -26,9 +25,8 @@ import com.xgzq.yu.reader.model.model.BookModel;
 import com.xgzq.yu.reader.model.model.ReadModel;
 import com.xgzq.yu.reader.utils.DistanceUtil;
 import com.xgzq.yu.reader.utils.Util;
-import com.xgzq.yu.reader.widget.ReadView;
+import com.xgzq.yu.reader.widget.ReadView2;
 
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class ReadActivity extends AppCompatActivity {
     public static final float PERCENT_WIDTH_CHAPTER_RECYCLER_VIEW = 0.9f;
     private static final String[] Permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-    private ReadView mReadView;
+    private ReadView2 mReadView;
     private BookLoading mBookLoading;
     private DrawerLayout mDrawerLayout;
     private RecyclerView mChapterRecyclerView;
@@ -56,8 +54,6 @@ public class ReadActivity extends AppCompatActivity {
     private List<Chapter> mChapterList;
 
     private ReadModel mReadModel;
-    private RandomAccessFile mRandomAccessFile;
-    private RxPermissions mRxPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +69,7 @@ public class ReadActivity extends AppCompatActivity {
         } else {
             throw new IllegalArgumentException("intent is null, args is null!");
         }
-        mReadModel = new ReadModel(mBook, mChapterCallback);
+        mReadModel = new ReadModel(mBook, mGetChapterListCallback);
 
         // 初始化View
         mReadView = findViewById(R.id.read_rv);
@@ -84,7 +80,7 @@ public class ReadActivity extends AppCompatActivity {
 
         // 初始化列表数据
         mChapterList = new ArrayList<>(200);
-        mChapterListAdapter = new ChapterListAdapter(mChapterList, mReadConfig, mChapterClickListener);
+        mChapterListAdapter = new ChapterListAdapter(mChapterList, mReadConfig, mChapterListClickListener);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mDividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mDividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.shape_list_item_divider_line));
@@ -129,16 +125,26 @@ public class ReadActivity extends AppCompatActivity {
     }
 
 
-    private ChapterListAdapter.OnClickListener mChapterClickListener = new ChapterListAdapter.OnClickListener() {
+    private ChapterListAdapter.OnClickListener mChapterListClickListener = new ChapterListAdapter.OnClickListener() {
         @Override
         public void onClick(View view, Chapter chapter, int position) {
+            if (position == 0) {
+                mReadView.setPreviousChapter(null);
+            } else {
+                mReadView.setPreviousChapter(mChapterList.get(position - 1));
+            }
+            if (position == mChapterList.size() - 1) {
+                mReadView.setNextChapter(null);
+            } else {
+                mReadView.setNextChapter(mChapterList.get(position + 1));
+            }
             mReadView.setChapter(chapter, true);
             mReadConfig.setChapterIndex(position);
             mDrawerLayout.closeDrawer(mChapterRecyclerView);
         }
     };
 
-    private ReadModel.IChapterCallback mChapterCallback = new ReadModel.IChapterCallback() {
+    private ReadModel.IChapterCallback mGetChapterListCallback = new ReadModel.IChapterCallback() {
         @Override
         public void onStart(Disposable disposable) {
             Log.d(TAG, "onStart");
@@ -175,18 +181,24 @@ public class ReadActivity extends AppCompatActivity {
     /**
      * 阅读状态回调
      */
-    private ReadView.ReadCallback mReadCallback = new ReadView.ReadCallback() {
+    private ReadView2.ReadCallback mReadCallback = new ReadView2.ReadCallback() {
         @Override
         public void onNextChapter() {
             if (mReadConfig.getChapterIndex() >= mChapterList.size() - 1) {
                 Toast.makeText(ReadActivity.this, "已经是最后一章了！", Toast.LENGTH_SHORT).show();
                 return;
             }
+            mReadView.setPreviousChapter(mChapterList.get(mReadConfig.getChapterIndex()));
             final int nextChapterIndex = mReadConfig.getChapterIndex() + 1;
             mReadConfig.setChapterIndex(nextChapterIndex);
             final Chapter chapter = mChapterList.get(nextChapterIndex);
             Log.d(TAG, "nextChapterIndex: " + nextChapterIndex + ", chapter: " + chapter.getTitle());
             mReadView.setChapter(chapter, true);
+            if (nextChapterIndex + 1 <= mChapterList.size() - 1) {
+                mReadView.setNextChapter(mChapterList.get(nextChapterIndex + 1));
+            } else {
+                mReadView.setNextChapter(null);
+            }
         }
 
         @Override
@@ -195,9 +207,13 @@ public class ReadActivity extends AppCompatActivity {
                 Toast.makeText(ReadActivity.this, "已经是第一章了！", Toast.LENGTH_SHORT).show();
                 return;
             }
-            int nextChapterIndex = mReadConfig.getChapterIndex() - 1;
-            mReadConfig.setChapterIndex(nextChapterIndex);
-            mReadView.setChapter(mChapterList.get(nextChapterIndex), false);
+            if (mReadConfig.getChapterIndex() == 0) {
+                mReadView.setPreviousChapter(null);
+            }
+            int previousChapterIndex = mReadConfig.getChapterIndex() - 1;
+            mReadConfig.setChapterIndex(previousChapterIndex);
+            mReadView.setChapter(mChapterList.get(previousChapterIndex), false);
+            mReadView.setNextChapter(mChapterList.get(previousChapterIndex + 1));
         }
 
         @Override
@@ -212,6 +228,7 @@ public class ReadActivity extends AppCompatActivity {
             mBookLoading.setVisibility(View.INVISIBLE);
         }
     };
+
 
     public void subFontSize(View view) {
         mReadView.subFontSize();

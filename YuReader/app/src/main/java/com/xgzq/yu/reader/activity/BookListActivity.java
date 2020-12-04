@@ -94,7 +94,8 @@ public class BookListActivity extends AppCompatActivity implements BookModel.Cal
         @Override
         public void onClick(View v, Book book, int position) {
             Log.d(TAG, "onClick => Book: " + book.toString() + " , position: " + position);
-            Intent readActivity = new Intent(BookListActivity.this, ReadActivity.class);
+            Intent readActivity = new Intent(BookListActivity.this, NewReadActivity.class);
+//            Intent readActivity = new Intent(BookListActivity.this, ReadActivity.class);
             Log.d(TAG, "book: " + book.toString());
             Log.d(TAG, "bookConfig: " + mBookListModel.getBookConfig().toString());
             readActivity.putExtra(EXTRA_KEY_BOOK, book);

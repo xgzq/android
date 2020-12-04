@@ -40,12 +40,12 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
     /**
      * 翻页动画时长
      */
-    public static final int TURN_PAGE_ANIMATION_TIME = 1000;
+    public static final int TURN_PAGE_ANIMATION_TIME = 300;
 
     /**
      * 翻页最小移动距离
      */
-    public static final float MIN_TURN_PAGE_DISTANCE = DistanceUtil.dp2px(30);
+    public static final float MIN_TURN_PAGE_DISTANCE = DistanceUtil.dp2px(100);
 
     public static final int DEFAULT_CURRENT_BACKGROUND_COLOR = App.getApp().getResources().getColor(R.color.read_current_background);
     public static final int DEFAULT_BG_BACKGROUND_COLOR = App.getApp().getResources().getColor(R.color.read_bg_background);
@@ -80,6 +80,9 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
     private Orientation mOrientation;
     private Matrix mMatrix;
 
+    private long mLastTouchTime = 0;
+
+
     //设置翻转和旋转矩阵
     private float[] mMatrixArray = {0, 0, 0, 0, 0, 0, 0, 0, 1.0f};
 
@@ -102,7 +105,7 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         init(context, attrs, defStyleAttr);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    protected void init(Context context, AttributeSet attrs, int defStyleAttr) {
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ABookPageView);
             mCurrentBackgroundColor = typedArray.getColor(R.styleable.ABookPageView_currentBackgroundColor, DEFAULT_CURRENT_BACKGROUND_COLOR);
@@ -162,27 +165,35 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         mVertex.x = mViewWidth;
         mVertex.y = mViewHeight;
 
-        calculatePointCoordinates(mTouchPoint, mVertex);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
+
+        calculatePointCoordinates(mTouchPoint, mVertex);
         mAreaBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.ARGB_8888);
         mAreaBitmapCanvas = new Canvas(mAreaBitmap);
+
+        onSizeMeasured();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mTouchPoint.x <= 0 && mTouchPoint.y <= 0) {
+        if (mTouchPoint.x == -1 && mTouchPoint.y == -1) {
             drawCurrentAreaContent(mAreaBitmapCanvas, getDefaultPath(), mCurrentAreaPaint);
         } else {
             Path currentAreaPath;
             if (mOrientation == Orientation.RightTop) {
                 currentAreaPath = getCurrentAreaPathInRightTop();
                 drawCurrentAreaContent(mAreaBitmapCanvas, currentAreaPath, mCurrentAreaPaint);
+                drawBgAreaContent(mAreaBitmapCanvas, currentAreaPath, mBgAreaPaint);
+                drawNextAreaContent(mAreaBitmapCanvas, currentAreaPath, mNextAreaPaint);
+            } else if (mOrientation == Orientation.Left) {
+                currentAreaPath = getCurrentAreaPathInRightBottom();
+                drawCurrentAreaContent(mAreaBitmapCanvas, currentAreaPath, mCurrentAreaPaint, true);
                 drawBgAreaContent(mAreaBitmapCanvas, currentAreaPath, mBgAreaPaint);
                 drawNextAreaContent(mAreaBitmapCanvas, currentAreaPath, mNextAreaPaint);
             } else {
@@ -202,7 +213,7 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         if (!mScroller.isFinished()) {
             return true;
         }
-        if (!mGestureDetector.onTouchEvent(event) && event.getAction() == MotionEvent.ACTION_UP) {
+        if (event.getAction() == MotionEvent.ACTION_UP && !mGestureDetector.onTouchEvent(event)) {
             onUp(event);
         }
         return mGestureDetector.onTouchEvent(event);
@@ -211,6 +222,7 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
     private float mStartX = 0f;
     private float mStartY = 0f;
     private boolean isTouchUp = false;
+    private boolean isFromTouch = false;
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -218,12 +230,13 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         mStartX = e.getX();
         mStartY = e.getY();
         isTouchUp = false;
+        isFromTouch = true;
         return true;
     }
 
 
     private void onUp(MotionEvent event) {
-//        Log.d(TAG, "onUp: " + event.getX() + ", " + event.getY());
+        Log.d(TAG, "onUp: " + event.getX() + ", " + event.getY());
         isTouchUp = true;
         final float x = event.getX();
         final float y = event.getY();
@@ -265,12 +278,10 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
 //        Log.d(TAG, "onShowPress: " + e.getAction());
     }
 
-    private long lastTime = 0;
-
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 //        Log.d(TAG, "onSingleTapUp: " + e.getAction());
-        if (System.currentTimeMillis() - lastTime > MIN_CLICK_TIME_INTERVAL) {
+        if (System.currentTimeMillis() - mLastTouchTime > MIN_CLICK_TIME_INTERVAL) {
             isTouchUp = true;
             final float x = e.getX();
             final float y = e.getY();
@@ -318,7 +329,7 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
                     mOnReadListener.onNextStart();
                 }
             }
-            lastTime = System.currentTimeMillis();
+            mLastTouchTime = System.currentTimeMillis();
         }
         return true;
     }
@@ -337,24 +348,34 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
             mTouchPoint.y = mViewHeight - 0.1f;
             mVertex.x = mViewWidth;
             mVertex.y = mViewHeight;
+            calculatePointCoordinates(mTouchPoint, mVertex);
         } else if (orientation == Orientation.RightTop) {
             mTouchPoint.x = x;
             mTouchPoint.y = y;
             mVertex.x = mViewWidth;
             mVertex.y = 0;
             calculatePointCoordinates(mTouchPoint, mVertex);
+            if (calculateLeftVertexCoordinates(mTouchPoint, mVertex) < 0) {
+                calculateSimilarTouchPointCoordinates();
+                calculatePointCoordinates(mTouchPoint, mVertex);
+            }
         } else if (orientation == Orientation.RightCenter) {
             mTouchPoint.x = x;
             mTouchPoint.y = mViewHeight - 0.1f;
             mVertex.x = mViewWidth;
             mVertex.y = mViewHeight;
+            calculatePointCoordinates(mTouchPoint, mVertex);
         } else if (orientation == Orientation.RightBottom) {
             mTouchPoint.x = x;
             mTouchPoint.y = y;
             mVertex.x = mViewWidth;
             mVertex.y = mViewHeight;
+            calculatePointCoordinates(mTouchPoint, mVertex);
+            if (calculateLeftVertexCoordinates(mTouchPoint, mVertex) < 0) {
+                calculateSimilarTouchPointCoordinates();
+                calculatePointCoordinates(mTouchPoint, mVertex);
+            }
         }
-        calculatePointCoordinates(mTouchPoint, mVertex);
         invalidate();
         return true;
     }
@@ -403,139 +424,12 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         return orientation;
     }
 
-    //    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        float x = event.getX();
-//        float y = event.getY();
-//        // 防止抬起手指后滑动动画还未结束，就再次翻页滑动，造成动画错乱
-//        Log.d(TAG, "isFinished: " + mScroller.isFinished());
-//        if (!mScroller.isFinished()) {
-//            return true;
-//        }
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            mStartX = x;
-//            mStartY = y;
-//            if (x < mViewWidth / 3f) {
-//                mOrientation = Orientation.Left;
-//            } else {
-//                if (y < mViewHeight / 3f) {
-//                    mOrientation = Orientation.RightTop;
-//                } else if (mViewHeight / 3f <= y && y <= mViewHeight / 3f * 2f) {
-//                    if (x <= mViewWidth / 3f * 2f) {
-//                        mOrientation = Orientation.Center;
-//                    } else {
-//                        mOrientation = Orientation.RightCenter;
-//                    }
-//                } else if (x >= mViewWidth / 2f && y >= mViewHeight / 2f) {
-//                    mOrientation = Orientation.RightBottom;
-//                } else {
-//                    mOrientation = Orientation.Center;
-//                }
-//            }
-//        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//            if (mOrientation == Orientation.Left) {
-//                mTouchPoint.x = x;
-//                mTouchPoint.y = y;
-//                mVertex.y = mViewHeight;
-//                mTouchPoint.y = mViewHeight - 0.1f;
-//                calculatePointCoordinates(mTouchPoint, mVertex);
-//                invalidate();
-//            } else if (mOrientation == Orientation.Center) {
-//
-//            } else {
-//                mTouchPoint.x = x;
-//                mTouchPoint.y = y;
-//                if (mOrientation == Orientation.RightTop) {
-//                    mVertex.y = 0;
-//                    calculatePointCoordinates(mTouchPoint, mVertex);
-//                    if (calculateLeftVertexCoordinates(new PointF(x, y), mVertex) < 0) {
-//                        calculateSimilarTouchPointCoordinates();
-//                        calculatePointCoordinates(mTouchPoint, mVertex);
-//                    }
-//                    invalidate();
-//                } else if (mOrientation == Orientation.RightBottom) {
-//                    mVertex.y = mViewHeight;
-//                    calculatePointCoordinates(mTouchPoint, mVertex);
-//                    if (calculateLeftVertexCoordinates(new PointF(x, y), mVertex) < 0) {
-//                        calculateSimilarTouchPointCoordinates();
-//                        calculatePointCoordinates(mTouchPoint, mVertex);
-//                    }
-//                    invalidate();
-//                } else if (mOrientation == Orientation.RightCenter) {
-//                    mVertex.y = mViewHeight;
-//                    mTouchPoint.y = mViewHeight - 0.1f;
-//                    calculatePointCoordinates(mTouchPoint, mVertex);
-//                    invalidate();
-//                }
-//            }
-//        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//            final float disX = Math.abs(x - mStartX);
-//            final float disY = Math.abs(y - mStartY);
-//            // 防止单击界面出现绘制错乱问题
-//            if (disX < 4.0f && disY < 4.0f) {
-//                if (mOrientation == Orientation.Center && mOnReadListener != null) {
-//                    mOnReadListener.onMenu();
-//                }
-//                return true;
-//            }
-//            if (mOrientation == Orientation.Left) {
-//                final double dis = Math.hypot(disX, disY);
-//                if (dis > 100) {
-//                    mScroller.startScroll((int) mTouchPoint.x, (int) mTouchPoint.y, (int) (mViewWidth - x), 0, 300);
-//                    if (mOnReadListener != null) {
-//                        mOnReadListener.onPreviousEnd();
-//                    }
-//                } else {
-//                    // 否则恢复
-//                    mScroller.startScroll((int) mTouchPoint.x, (int) mTouchPoint.y, (int) (-mViewWidth - x), 0, 300);
-//                    if (mOnReadListener != null) {
-//                        mOnReadListener.onPreviousCancel();
-//                    }
-//                }
-//                invalidate();
-//            } else if (mOrientation == Orientation.Center) {
-//            } else {
-//                int dx = 0, dy = 0;
-//                float toX = -x - mViewWidth;
-//                float toY = 0f;
-//                if (mOrientation == Orientation.RightTop) {
-//                    dx = (int) (mVertex.x - 1 - mTouchPoint.x);
-//                    dy = (int) (1 - mTouchPoint.y);
-//                    toY = -y;
-//                } else if (mOrientation == Orientation.RightCenter) {
-//                    dx = (int) (mVertex.x - mTouchPoint.x - 1);
-//                    dy = (int) (mViewHeight - mTouchPoint.y - 1);
-//                    toY = 0;
-//                } else if (mOrientation == Orientation.RightBottom) {
-//                    dx = (int) (mVertex.x - mTouchPoint.x);
-//                    dy = (int) (mViewHeight - mTouchPoint.y);
-//                    toY = mViewHeight - y;
-//                }
-//                // 如果滑动距离超过100，则翻页
-//                final double dis = Math.hypot(disX, disY);
-//                Log.d(TAG, "dis: " + dis + ", toX: " + toX + ", toY: " + toY);
-//                if (dis > 100) {
-//                    mScroller.startScroll((int) mTouchPoint.x, (int) mTouchPoint.y, (int) toX, (int) toY, 3000);
-//                    if (mOnReadListener != null) {
-//                        mOnReadListener.onNextEnd();
-//                    }
-//                } else {
-//                    // 否则恢复
-//                    mScroller.startScroll((int) mTouchPoint.x, (int) mTouchPoint.y, dx, dy, 3000);
-//                    if (mOnReadListener != null) {
-//                        mOnReadListener.onNextCancel();
-//                    }
-//                }
-//                invalidate();
-//            }
-//        }
-//        return true;
-//    }
 
     @Override
     public void computeScroll() {
-//        Log.d(TAG, "computeScroll => isFinished: " + mScroller.isFinished() + ", mOrientation: " + mOrientation + ", isTouchUp: " + isTouchUp);
-        if (mScroller.isFinished() && isTouchUp && mOnReadListener != null) {
+        Log.d(TAG, "computeScroll => isFinished: " + mScroller.isFinished() + ", mOrientation: " + mOrientation + ", isTouchUp: " + isTouchUp);
+        if (mScroller.isFinished() && isTouchUp && isFromTouch && mOnReadListener != null) {
+            isFromTouch = false;
             if (mOrientation == Orientation.Center) {
             } else if (mOrientation == Orientation.Left) {
                 mOnReadListener.onPreviousEnd();
@@ -606,16 +500,24 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
     }
 
     private void drawCurrentAreaContent(Canvas canvas, Path currentAreaPath, Paint paint) {
+        drawCurrentAreaContent(canvas, currentAreaPath, paint, false);
+    }
+
+    private void drawCurrentAreaContent(Canvas canvas, Path currentAreaPath, Paint paint, boolean isPrevious) {
         Bitmap contentBitmap = Bitmap.createBitmap(mViewWidth, mViewHeight, Bitmap.Config.RGB_565);
         Canvas contentCanvas = new Canvas(contentBitmap);
 
         //下面开始绘制区域内的内容...
         contentCanvas.drawPath(currentAreaPath, paint);//绘制一个背景，用来区分各区域
-        drawCurrentPageContent(contentCanvas);
+        if (isPrevious) {
+            drawPreviousPageContent(contentCanvas);
+        } else {
+            drawCurrentPageContent(contentCanvas);
+        }
 
         //结束绘制区域内的内容...
         canvas.save();
-        canvas.clipPath(currentAreaPath, Region.Op.INTERSECT);//对绘制内容进行裁剪，取和A区域的交集
+//        canvas.clipPath(currentAreaPath, Region.Op.INTERSECT);//对绘制内容进行裁剪，取和A区域的交集
         canvas.drawBitmap(contentBitmap, 0, 0, null);
 
         if (mOrientation == Orientation.Left || mOrientation == Orientation.RightCenter) {
@@ -887,6 +789,9 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         gradientDrawable.draw(canvas);
     }
 
+    /**
+     * 当左顶点x处于临界值的时候，找到触摸点相似的点
+     */
     private void calculateSimilarTouchPointCoordinates() {
         float w0 = mViewWidth - c.x;
 
@@ -899,6 +804,13 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         mTouchPoint.y = Math.abs(mVertex.y - h2);
     }
 
+    /**
+     * 计算左顶点是否超过界限，左顶点x坐标不能小于0，翻书不能超过左侧
+     *
+     * @param mTouchPoint
+     * @param mVertex
+     * @return
+     */
     private float calculateLeftVertexCoordinates(PointF mTouchPoint, PointF mVertex) {
         PointF g, e;
         g = new PointF();
@@ -978,9 +890,13 @@ public abstract class ABookPageView extends View implements GestureDetector.OnGe
         return new PointF(pointX, pointY);
     }
 
+    protected abstract void drawPreviousPageContent(Canvas canvas);
+
     protected abstract void drawCurrentPageContent(Canvas canvas);
 
     protected abstract void drawNextPageContent(Canvas canvas);
+
+    protected abstract void onSizeMeasured();
 
     public void setCurrentBackgroundColor(@ColorInt int color) {
         mCurrentAreaPaint.setColor(color);

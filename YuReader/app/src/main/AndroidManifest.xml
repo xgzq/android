@@ -15,8 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+        <activity
+            android:name=".activity.NewReadActivity"
+            android:theme="@style/FullScreenTheme"></activity>
         <activity android:name=".activity.BookListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.ReadActivity"
@@ -27,14 +35,7 @@
         </activity>
         <activity
             android:name=".activity.PageActivity"
-            android:theme="@style/FullScreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/FullScreenTheme"></activity>
     </application>
 
 </manifest>

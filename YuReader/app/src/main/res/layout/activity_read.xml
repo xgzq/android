@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.xgzq.yu.reader.widget.ReadView
+        <com.xgzq.yu.reader.widget.ReadView2
             android:id="@+id/read_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:onClick="addPaddingX"
             android:text="X边距+"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintStart_toEndOf="@+id/button5" />
 
@@ -49,6 +50,7 @@
             android:layout_marginBottom="192dp"
             android:onClick="subFontSize"
             android:text="字号-"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -59,6 +61,7 @@
             android:layout_marginBottom="192dp"
             android:onClick="addFontSize"
             android:text="字号+"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button1" />
 
@@ -69,6 +72,7 @@
             android:layout_marginBottom="192dp"
             android:onClick="subLineSpacing"
             android:text="行距-"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/read_rv"
             app:layout_constraintStart_toEndOf="@+id/button2" />
 
@@ -79,6 +83,7 @@
             android:layout_marginBottom="192dp"
             android:onClick="addLineSpacing"
             android:text="行距+"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/read_rv"
             app:layout_constraintStart_toEndOf="@+id/button3" />
 
@@ -90,6 +95,7 @@
             android:layout_marginLeft="24dp"
             android:onClick="subPaddingX"
             android:text="X边距-"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/button1"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -99,6 +105,7 @@
             android:layout_height="wrap_content"
             android:onClick="addPaddingY"
             android:text="Y边距+"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/button4"
             app:layout_constraintStart_toEndOf="@+id/button7" />
 
@@ -108,6 +115,7 @@
             android:layout_height="wrap_content"
             android:onClick="subPaddingY"
             android:text="Y边距-"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/button3"
             app:layout_constraintStart_toEndOf="@+id/button6" />
 
@@ -117,6 +125,7 @@
             android:layout_height="wrap_content"
             android:onClick="nextPage"
             android:text="下一页"
+            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/button3"
             app:layout_constraintTop_toBottomOf="@+id/button4" />
 
@@ -126,6 +135,7 @@
             android:layout_height="wrap_content"
             android:onClick="previousPage"
             android:text="上一页"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/button1"
             app:layout_constraintStart_toStartOf="@+id/button1"
             app:layout_constraintTop_toBottomOf="@+id/button1" />
