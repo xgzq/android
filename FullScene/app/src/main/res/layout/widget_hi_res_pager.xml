@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_hi_res_pager_root"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@color/colorAccent"
+    android:layout_width="300dp"
+    android:layout_height="120dp">
+
+</androidx.viewpager.widget.ViewPager>

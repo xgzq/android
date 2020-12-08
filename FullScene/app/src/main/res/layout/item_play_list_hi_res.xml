@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/item_play_list_image_cover"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_text_index"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/item_play_list_text_index"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="1"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/item_play_list_ll_song_name"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_image_cover"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_ll_song_name"
+        app:layout_constraintTop_toTopOf="@id/item_play_list_ll_song_name" />
+
+    <LinearLayout
+        android:id="@+id/item_play_list_ll_song_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/item_play_list_text_artist_name"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_text_index"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_image_play_status"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/item_play_list_text_song_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="歌曲名称：清明雨上"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/item_play_list_text_artist_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="艺术家名称：许嵩艺术家名称：许嵩艺术家名称：许嵩艺术家名称：许嵩艺术家名称：许嵩"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/item_play_list_image_hi_res"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_text_index"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_image_play_status"
+        app:layout_constraintTop_toBottomOf="@id/item_play_list_ll_song_name" />
+
+    <ImageView
+        android:id="@+id/item_play_list_image_play_status"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_ll_song_name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/item_play_list_image_hi_res"
+        android:layout_width="24dp"
+        android:layout_height="12dp"
+        app:layout_constraintLeft_toLeftOf="@id/item_play_list_text_artist_name"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_image_hi_res_vip_type"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_play_list_text_artist_name"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <ImageView
+        android:id="@+id/item_play_list_image_hi_res_vip_type"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_image_hi_res"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_text_flac"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_play_list_text_artist_name"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/item_play_list_text_flac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FLAC"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_image_hi_res_vip_type"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_text_hz"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_play_list_text_artist_name" />
+
+    <TextView
+        android:id="@+id/item_play_list_text_hz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="44.2kHz"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_text_flac"
+        app:layout_constraintRight_toLeftOf="@id/item_play_list_text_bit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_play_list_text_artist_name" />
+
+    <TextView
+        android:id="@+id/item_play_list_text_bit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="92bit"
+        app:layout_constraintLeft_toRightOf="@id/item_play_list_text_hz"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_play_list_text_artist_name" />
+</androidx.constraintlayout.widget.ConstraintLayout>

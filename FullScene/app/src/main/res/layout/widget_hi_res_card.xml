@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hi_res_card_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_radius"
@@ -10,11 +10,10 @@
     <TextView
         android:id="@+id/hi_res_card_album_name_previous"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Previous Album Name"
-        android:textColor="#F00"
-        android:textSize="18sp"
+        android:layout_height="0dp"
         android:alpha="0"
+        android:text="Previous Album Name"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/hi_res_card_album_name_current"
         app:layout_constraintLeft_toLeftOf="@id/hi_res_card_album_name_current"
         app:layout_constraintRight_toRightOf="@id/hi_res_card_album_name_current"
@@ -24,22 +23,20 @@
         android:id="@+id/hi_res_card_album_name_current"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="Current Album Name"
         android:textSize="18sp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/hi_res_card_album_name_next"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Next Album Name"
-        android:textColor="#FF0"
-        android:textSize="18sp"
+        android:layout_height="0dp"
         android:alpha="0"
+        android:text="Next Album Name"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/hi_res_card_album_name_current"
         app:layout_constraintLeft_toLeftOf="@id/hi_res_card_album_name_current"
         app:layout_constraintRight_toRightOf="@id/hi_res_card_album_name_current"
@@ -48,10 +45,9 @@
     <TextView
         android:id="@+id/hi_res_card_artist_name_previous"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Previous Artist Name"
-        android:textColor="#F00"
+        android:layout_height="0dp"
         android:alpha="0"
+        android:text="Previous Artist Name"
         app:layout_constraintBottom_toBottomOf="@id/hi_res_card_artist_name_current"
         app:layout_constraintLeft_toLeftOf="@id/hi_res_card_artist_name_current"
         app:layout_constraintRight_toRightOf="@id/hi_res_card_artist_name_current"
@@ -61,102 +57,94 @@
         android:id="@+id/hi_res_card_artist_name_current"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Current Artist Name"
-        android:layout_marginTop="4dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Current Artist Name"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guideline4"
         app:layout_constraintTop_toBottomOf="@id/hi_res_card_album_name_current" />
 
     <TextView
         android:id="@+id/hi_res_card_artist_name_next"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Next Artist Name"
-        android:textColor="#FF0"
+        android:layout_height="0dp"
         android:alpha="0"
+        android:text="Next Artist Name"
         app:layout_constraintBottom_toBottomOf="@id/hi_res_card_artist_name_current"
         app:layout_constraintLeft_toLeftOf="@id/hi_res_card_artist_name_current"
         app:layout_constraintRight_toRightOf="@id/hi_res_card_artist_name_current"
         app:layout_constraintTop_toTopOf="@id/hi_res_card_artist_name_current" />
 
     <ImageView
-        android:id="@+id/hi_res_card_album_image_previous_previous"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guideline3"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/hi_res_card_album_image_previous"
-        android:layout_width="92dp"
-        android:layout_height="92dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guideline"
-        app:layout_constraintRight_toRightOf="parent"
-        android:alpha="0.3"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/hi_res_card_album_image_current"
-        android:layout_width="112dp"
-        android:layout_height="112dp"
-        android:alpha="0.3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hi_res_card_album_name_current"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
         android:id="@+id/hi_res_card_album_image_times"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@mipmap/placeholder"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_width="16dp"
-        android:layout_height="16dp"/>
+        android:src="@mipmap/placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/hi_res_card_album_text_times"
-        app:layout_constraintLeft_toRightOf="@id/hi_res_card_album_image_times"
-        app:layout_constraintTop_toTopOf="@id/hi_res_card_album_image_times"
-        app:layout_constraintBottom_toBottomOf="@id/hi_res_card_album_image_times"
-        app:layout_constraintRight_toLeftOf="@id/hi_res_card_album_image_previous_previous"
-        android:text="1.555万"
-        android:layout_marginLeft="4dp"
-        android:textSize="12sp"
+        android:id="@+id/hi_res_card_album_text_times_previous"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:text="1.555万"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/hi_res_card_album_text_times_current"
+        app:layout_constraintLeft_toLeftOf="@id/hi_res_card_album_text_times_current"
+        app:layout_constraintRight_toRightOf="@id/hi_res_card_album_text_times_current"
+        app:layout_constraintTop_toTopOf="@id/hi_res_card_album_text_times_current" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+    <TextView
+        android:id="@+id/hi_res_card_album_text_times_current"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text="1.555万"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/hi_res_card_album_image_times"
+        app:layout_constraintLeft_toRightOf="@id/hi_res_card_album_image_times"
+        app:layout_constraintRight_toLeftOf="@id/hi_res_card_anim"
+        app:layout_constraintTop_toTopOf="@id/hi_res_card_album_image_times" />
+
+    <TextView
+        android:id="@+id/hi_res_card_album_text_times_next"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:text="1.555万"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/hi_res_card_album_text_times_current"
+        app:layout_constraintLeft_toLeftOf="@id/hi_res_card_album_text_times_current"
+        app:layout_constraintRight_toRightOf="@id/hi_res_card_album_text_times_current"
+        app:layout_constraintTop_toTopOf="@id/hi_res_card_album_text_times_current" />
+
+
+    <com.xgzq.fullscene.HiResAnim
+        android:id="@+id/hi_res_card_anim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="92dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hi_res_card_artist_name_current" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="112dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="168dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="184dp" />
-
+    <View
+        android:id="@+id/hi_res_card_v1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/hi_res_card_v2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintRight_toLeftOf="@id/hi_res_card_v1"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/hi_res_card_v3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintRight_toLeftOf="@id/hi_res_card_v2"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,10 @@
     android:paddingRight="16dp"
     tools:context=".MainActivity">
 
-    <include layout="@layout/widget_hi_res_card" />
+    <com.xgzq.fullscene.HiResCard
+        android:id="@+id/main_hi_res_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <com.xgzq.fullscene.HiResAnim
         android:id="@+id/main_hi_res_anim"

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="264dp"
     android:layout_height="120dp"
-    android:background="#FFF000"
     android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.Guideline

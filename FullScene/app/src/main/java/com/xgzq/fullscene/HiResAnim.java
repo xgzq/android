@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -39,6 +40,11 @@ public class HiResAnim extends LinearLayout {
     private int mLeftWidth, mCenterWidth, mRightWidth, mLeftHeight, mCenterHeight, mRightHeight;
     private int mLeftLeftWidth, mLeftLeftHeight, mRightRightWidth, mRightRightHeight;
     private int mCurrentIndex;
+    private IChangedListener mChangedListener;
+    private IOnColorComputedListener mOnColorComplutedListener;
+    private ValueAnimator.AnimatorUpdateListener mAnimatorUpdateListener;
+    private ValueAnimator.AnimatorListener mAnimatorListener;
+    private ValueAnimator.AnimatorPauseListener mAnimatorPauseListener;
 
     public HiResAnim(Context context) {
         this(context, null);
@@ -96,12 +102,18 @@ public class HiResAnim extends LinearLayout {
                 animCenterImage(fraction);
                 animRightImage(fraction);
                 animRightRightImage(fraction);
+                if (mAnimatorUpdateListener != null) {
+                    mAnimatorUpdateListener.onAnimationUpdate(animation);
+                }
             }
         });
         mValueAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 Log.i(TAG, "onAnimationStart: ");
+                if (mAnimatorListener != null) {
+                    mAnimatorListener.onAnimationStart(animation);
+                }
             }
 
             @Override
@@ -109,14 +121,15 @@ public class HiResAnim extends LinearLayout {
                 Log.i(TAG, "onAnimationEnd");
 
                 resetImage();
+                final int lastIndex = mCurrentIndex;
                 if (mCurrentIndex == 0) {
                     mCurrentIndex = mBitmapList.size() - 1;
                 } else {
                     mCurrentIndex--;
                 }
-
-//                mLeftImage.setImageBitmap(mBitmapList.get(1));
-//                mCenterImage.setImageBitmap(mBitmapList.get(2));
+                if (mChangedListener != null) {
+                    mChangedListener.onChanged(lastIndex, mCurrentIndex);
+                }
                 updateView();
                 mValueAnimator.start();
             }
@@ -124,22 +137,34 @@ public class HiResAnim extends LinearLayout {
             @Override
             public void onAnimationCancel(Animator animation) {
                 Log.i(TAG, "onAnimationCancel");
+                if (mAnimatorListener != null) {
+                    mAnimatorListener.onAnimationCancel(animation);
+                }
             }
 
             @Override
             public void onAnimationRepeat(Animator animation) {
                 Log.i(TAG, "onAnimationRepeat");
+                if (mAnimatorListener != null) {
+                    mAnimatorListener.onAnimationRepeat(animation);
+                }
             }
         });
         mValueAnimator.addPauseListener(new Animator.AnimatorPauseListener() {
             @Override
             public void onAnimationPause(Animator animation) {
                 Log.i(TAG, "onAnimationPause: " + mValueAnimator.getCurrentPlayTime());
+                if (mAnimatorPauseListener != null) {
+                    mAnimatorPauseListener.onAnimationPause(animation);
+                }
             }
 
             @Override
             public void onAnimationResume(Animator animation) {
                 Log.i(TAG, "onAnimationResume");
+                if (mAnimatorPauseListener != null) {
+                    mAnimatorPauseListener.onAnimationResume(animation);
+                }
             }
         });
     }
@@ -157,26 +182,48 @@ public class HiResAnim extends LinearLayout {
     private void requestImage() {
         float density = getResources().getDisplayMetrics().density;
         RequestOptions options = RequestOptions
-                .bitmapTransform(new RoundedCorners((int) (32 * density)))
+                .bitmapTransform(new RoundedCorners((int) (8 * density)))
                 .placeholder(R.mipmap.placeholder);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.placeholder);
         for (int i = 0; i < mUrlList.size(); i++) {
             final int index = i;
             mBitmapList.add(bitmap);
-            RequestBuilder<Bitmap> builder = Glide.with(getContext()).asBitmap().load(mUrlList.get(i)).apply(options).listener(new RequestListener<Bitmap>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                    return false;
-                }
+            RequestBuilder<Bitmap> builder = Glide.with(getContext())
+                    .asBitmap()
+                    .load(mUrlList.get(i))
+                    .apply(options)
+                    .listener(new RequestListener<Bitmap>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                            return false;
+                        }
 
-                @Override
-                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                    mBitmapList.set(index, resource);
-                    updateView();
-                    return false;
-                }
-            });
-            builder.submit();
+                        @Override
+                        public boolean onResourceReady(final Bitmap resource, Object model, Target<Bitmap> target, final DataSource dataSource, boolean isFirstResource) {
+                            Log.i(TAG, "onResourceReady thread name: " + Thread.currentThread().getName());
+                            final Bitmap copy = resource.copy(Bitmap.Config.ARGB_8888, true);
+                            Palette.PaletteAsyncListener listener = new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(@Nullable Palette palette) {
+                                    Log.i(TAG, "onGenerated thread name: " + Thread.currentThread().getName());
+                                    assert palette != null;
+                                    Palette.Swatch dominantSwatch = palette.getDominantSwatch();
+                                    if (dominantSwatch != null && mOnColorComplutedListener != null) {
+                                        mOnColorComplutedListener.onComputed(index, dominantSwatch.getBodyTextColor(), dominantSwatch.getTitleTextColor(), dominantSwatch.getRgb(), dominantSwatch.getHsl());
+                                        Log.i(TAG, "color => " + index + " => bodyText: " + Integer.toHexString(dominantSwatch.getBodyTextColor()));
+                                        Log.i(TAG, "color => " + index + " => rgb: " + Integer.toHexString(dominantSwatch.getRgb()));
+                                        Log.i(TAG, "color => " + index + " => titleText: " + Integer.toHexString(dominantSwatch.getTitleTextColor()));
+                                    }
+                                    copy.recycle();
+                                }
+                            };
+                            Palette.from(copy).generate(listener);
+                            mBitmapList.set(index, resource);
+                            updateView();
+                            return false;
+                        }
+                    });
+            builder.submit(mRightWidth, mRightHeight);
         }
         mValueAnimator.start();
     }
@@ -244,7 +291,7 @@ public class HiResAnim extends LinearLayout {
         mRightRightImage.requestLayout();
     }
 
-    private void resetImage(){
+    private void resetImage() {
         mLeftLeftImage.getLayoutParams().width = mLeftLeftWidth;
         mLeftLeftImage.getLayoutParams().height = mLeftLeftHeight;
         mLeftLeftImage.setTranslationX(0);
@@ -275,4 +322,31 @@ public class HiResAnim extends LinearLayout {
 //        mRightRightImage.requestLayout();
     }
 
+    public void setChangedListener(IChangedListener changedListener) {
+        mChangedListener = changedListener;
+    }
+
+    public void setOnColorComplutedListener(IOnColorComputedListener onColorComplutedListener) {
+        mOnColorComplutedListener = onColorComplutedListener;
+    }
+
+    public void setAnimatorUpdateListener(ValueAnimator.AnimatorUpdateListener animatorUpdateListener) {
+        mAnimatorUpdateListener = animatorUpdateListener;
+    }
+
+    public void setAnimatorListener(ValueAnimator.AnimatorListener animatorListener) {
+        mAnimatorListener = animatorListener;
+    }
+
+    public void setAnimatorPauseListener(ValueAnimator.AnimatorPauseListener animatorPauseListener) {
+        mAnimatorPauseListener = animatorPauseListener;
+    }
+
+    public interface IChangedListener {
+        void onChanged(int fromIndex, int toIndex);
+    }
+
+    public interface IOnColorComputedListener {
+        void onComputed(int index, Object... objects);
+    }
 }
