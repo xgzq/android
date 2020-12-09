@@ -1,36 +1,33 @@
 package com.xgzq.fullscene;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Transformation;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ICallback<List<Album>>{
+public class MainActivity extends AppCompatActivity implements ICallback<List<Album>> {
 
     private HiResCard mHiResCard;
     private HiResAnim mHiResAnim;
-    private HiResPager mHiResPager;
+    private RecyclerView mPlayListRecyclerView;
+    private List<Album> mAlbumList;
+    private PlayListAdapter mPlayListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mHiResCard = findViewById(R.id.main_hi_res_card);
+        mPlayListRecyclerView = findViewById(R.id.main_play_list);
+        mAlbumList = new ArrayList<>();
+        mPlayListAdapter = new PlayListAdapter(this, mAlbumList);
+        mPlayListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mPlayListRecyclerView.addItemDecoration(new PlayListAdapter.PlayListDivider(this));
+        mPlayListRecyclerView.setAdapter(mPlayListAdapter);
 
         DataCenter.getAlbumData(this);
     }
@@ -48,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements ICallback<List<Al
             urls.add(album.getAlbumCoverUrl());
         }
 //        mHiResAnim.addImageUrl(urls);
-        mHiResPager.addData(urls);
+        mAlbumList.addAll(albums);
+        mPlayListAdapter.notifyDataSetChanged();
     }
 }
